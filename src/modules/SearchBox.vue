@@ -1,6 +1,6 @@
 <template>
-  <div class="searchbox-container" :style="searchBoxStyle">
-    <div class="title" :class="{'results-title': !isLandingMode}">Pixasearch</div>
+  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'">
+    <div class="title">Pixasearch</div>
     <section class="search-controls">
       <div class="main-input">
         <input type="text" v-model="searchTerm" :placeholder="placeholder"/>
@@ -24,21 +24,6 @@ export default {
       placeholder: 'Whatcha looking for?'
     }
   },
-  computed: {
-    searchBoxStyle () {
-      if (this.isLandingMode) {
-        return {
-          'height': '100%',
-          'flex-direction': 'column'
-        }
-      } else {
-        return {
-          'height': '65px',
-          'flex-direction': 'row'
-        }
-      }
-    }
-  },
   methods: {
     startSearch () {
       if (!this.searchTerm) return
@@ -49,16 +34,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .searchbox-container {
+  .searchbox {
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 10%;
     .title {
       font-weight: bold;
-      font-size: 34px;
-    }
-    .results-title {
-      margin-right: 30px;
+      font-size: 60px;
     }
     .search-controls {
       display: flex;
@@ -68,6 +52,14 @@ export default {
           width: 250px;
         }
       }
+    }
+  }
+  .searchbox-results {
+    flex-direction: row;    
+    height: 65px;
+    .title {
+      margin-right: 30px;
+      font-size: 34px;
     }
   }
 </style>
