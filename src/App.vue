@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import SearchBox from './modules/SearchBox.vue'
+import SearchBox from './modules/SearchBox/index.vue'
 
 export default {
   name: 'app',

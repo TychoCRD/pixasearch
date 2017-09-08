@@ -1,6 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -39,8 +43,15 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.js', '.vue', '.less', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'src': resolve('src'),
+      'uikit': resolve('src/assets/styles/variables.less'),
+      'assets': resolve('src/assets'),
+      'com': resolve('src/components'),
+      'mod': resolve('src/modules')
     }
   },
   devServer: {
