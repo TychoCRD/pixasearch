@@ -3,7 +3,7 @@
     <div class="title">Pixasearch</div>
     <section class="search-controls">
       <div class="main-input">
-        <input type="text" v-model="searchTerm" :placeholder="placeholder"/>
+        <input type="text" v-model="searchTerm" :placeholder="placeholder" autofocus/>
         <button @click.prevent="startSearch">Search</button>
       </div>
       <div class="search-filters">
@@ -56,7 +56,9 @@ export default {
   }
   .searchbox-results {
     flex-direction: row;    
+    justify-content: center;
     height: 65px;
+    margin-top: 0;
     .title {
       margin-right: 30px;
       font-size: 34px;
