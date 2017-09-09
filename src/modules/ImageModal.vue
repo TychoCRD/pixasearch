@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="operation">
-        <button class="btn btn-primary">Download</button>
+        <a :href="currentImage.pageURL" target="_blank"><button class="btn btn-primary">Download</button></a>
         </div>
     </div>
   </div>
@@ -101,7 +101,7 @@ export default {
       position: relative;
       width: 50%;
       max-height: 90%;
-      background-color: #555;
+      background-color: #222;
       display: flex;
       flex-direction: column;
       align-items: center;  
@@ -168,6 +168,9 @@ export default {
         width: 100%;
         display: flex;
         justify-content: center;
+        button {
+          cursor: pointer;
+        }
       }
     }
   }

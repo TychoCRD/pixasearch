@@ -4,18 +4,10 @@
     <div class="image-container">
       <img :src="imageData.previewURL" :alt="imageData.tags"></img>
       <div class="details" v-if="showDetails">
-        <!-- <span>
-          <i class="fa fa-thumbs-up"></i>{{imageData.likes}}
-        </span>
-        <span>
-          <i class="fa fa-heart"></i>{{imageData.favorites}}
-        </span> -->
-        <span>
+        <span @click.stop="downloadImage" class="download"><i class="fa fa-download"></i></span>
+        <span class="size">
           <i class="fa fa-file-image-o"></i>{{`${imageData.imageHeight} x ${imageData.imageWidth}`}}
         </span>
-        <!-- <span>
-          <i class="fa fa-download"></i>{{imageData.downloads}}
-        </span> -->
       </div>
     </div>
   </div>
@@ -39,6 +31,9 @@ export default {
     },
     openImage () {
       this.$emit('openImage', this.index)
+    },
+    downloadImage () {
+      window.open(this.imageData.pageURL)
     }
   }
 }
@@ -53,6 +48,9 @@ export default {
     display: flex;
     align-items: center;
     .image-container {
+      min-height: 20px;
+      min-width: 20px;
+      background-color: #007bff;
       position: relative;
       .details {
         display: flex;
@@ -69,7 +67,20 @@ export default {
         height: 100%;
         width: 100%;
         padding: 8px;
-        i {
+        .download {
+          border: 1px solid #fff;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          cursor: pointer;
+          width: 17px;
+          height: 17px;
+          border-radius: 50%;
+          i {
+            color: #fff;
+          }
+        }
+        .size i {
           margin-right: 5px;
         }
       }
