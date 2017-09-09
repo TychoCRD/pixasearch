@@ -8,6 +8,8 @@
 
 <script>
 import SearchBox from './modules/SearchBox/index.vue'
+import config from '../config.js'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -16,14 +18,28 @@ export default {
   },
   data () {
     return {
-      isLandingMode: true
+      isLandingMode: true,
+      searchRequest: null,
+      totalResults: 0,
+      resultsList: []
     }
   },
   methods: {
-    handleSearchRequest () {
+    handleSearchRequest (request) {
       if (this.isLandingMode) {
         this.isLandingMode = false
       }
+      this.searchRequest = request
+      let params = Object.assign({}, this.searchRequest)
+      params.key = config.key
+      axios.get('https://pixabay.com/api/', { params })
+        .then(resp => {
+          console.log(resp)
+          if (resp.status === 200) {
+            this.totalResults = resp.data.totalHits
+            this.resultsList = resp.data.hits
+          }
+        })
     }
   }
 }
