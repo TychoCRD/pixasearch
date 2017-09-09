@@ -31,5 +31,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .select-container {
+    span {
+      margin-right: 10px;
+    }
+  }
 </style>

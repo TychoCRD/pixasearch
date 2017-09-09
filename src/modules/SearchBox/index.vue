@@ -1,22 +1,42 @@
 <template>
   <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'">
-    <div class="title">Pixasearch</div>
-    <section class="search-controls">
+    <section class="title-search">
+      <h2 class="title">Pixasearch</h2>
       <div class="main-input">
         <input type="text" class="form-control" 
           v-model="searchTerm" 
           :placeholder="placeholder" autofocus/>
         <button class="btn btn-primary"
-          @click.prevent="startSearch">Search</button>
+          @click.prevent="startSearch">Search
+          <span class="glyphicon glyphicon-search"></span>
+          </button>
       </div>
-      <div class="search-filters">
-        <select-menu v-for="filter in filtersList"
-          :key="filter.param"
-          @change="updateSearchParams"
-          :param="filter.param"
-          :label="filter.label"
-          :options="filter.options"></select-menu>
-      </div>
+    </section>
+    <section class="search-filters">
+      <select-menu v-for="filter in filtersList"
+        :key="filter.param"
+        @change="updateSearchParams"
+        :param="filter.param"
+        :label="filter.label"
+        :options="filter.options"></select-menu>
+        <div class="form-group">
+          <span>Min Width:</span>
+          <input class="form-control" type="number" id="min_width" v-model="searchParams.min_width"/>
+        </div>
+        <div class="form-group">
+          <span>Min Height:</span>
+          <input class="form-control" type="number" id="min_height" v-model="searchParams.min_height"/>
+        </div>
+        <div class="form-check">
+          <label for="editor" class="form-check-label">
+            <input class="form-check-input" type="checkbox" id="editor" v-model="searchParams.editors_choice">
+            Editor's Choice</label>
+        </div>
+        <div class="form-check">
+          <label for="safe" class="form-check-label">
+            <input class="form-check-input" type="checkbox" id="safe" v-model="searchParams.safesearch">
+            Safesearch</label>
+        </div>
     </section>
   </div>
 </template>
@@ -102,25 +122,44 @@ export default {
     height: 100%;
     margin-top: 10%;
     padding: 20px;
-    .title {
-      font-weight: bold;
-      font-size: 60px;
-    }
-    .search-controls {
+    .title-search {
       display: flex;
       flex-direction: column;
+      .title {
+        font-weight: bold;
+        // font-size: 44px;
+      }
       .main-input {
         display: flex;
         input {
-          width: 250px;
+          // font-size: 26px;
+          // width: 250px;  
+          // width: 300px;
           margin-right: 10px;
         }
         margin-bottom: 15px;
       }
-      .search-filters {
-        div {
-          margin-left: 15px;
+    }
+    .search-filters {
+      display: flex;
+      flex-wrap: wrap;
+      width: 65%;
+      div {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        margin-bottom: 15px;
+      }
+      input[type="number"] {
+        width: 70px;
+      }
+      .form-group {
+        span {
+          margin-right: 10px;
         }
+      }
+      .form-check {
+        margin-left: 25px;
       }
     }
   }
