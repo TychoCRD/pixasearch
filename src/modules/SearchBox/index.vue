@@ -163,7 +163,6 @@ export default {
     }
   }
   .searchbox-results {
-    flex-shrink: 0;
     flex-direction: row;    
     flex-wrap: wrap;
     justify-content: center;

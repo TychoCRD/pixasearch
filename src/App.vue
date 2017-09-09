@@ -1,10 +1,12 @@
 <template>
   <div class="app">
     <search-box 
-      @startSearch="handleSearchRequest"
+      @startSearch="handleNewSearch"
       :isLandingMode="isLandingMode"></search-box>
     <results v-if="!isLandingMode" :isLoading="isLoading" 
       @openImage="openModal"
+      @loadNewPage="loadNewPage"
+      :page="searchRequest.page"
       :list="resultsList" 
       :totalResults="totalResults"></results>
     <image-modal @close="closeModal"
@@ -44,11 +46,22 @@ export default {
     }
   },
   methods: {
-    handleSearchRequest (request) {
+    handleNewSearch (request) {
       if (this.isLandingMode) {
         this.isLandingMode = false
       }
       this.searchRequest = request
+      this.makeSearchRequest()
+    },
+    loadNewPage (direction) {
+      if (direction === 'prev') {
+        this.searchRequest.page--
+      } else {
+        this.searchRequest.page++
+      }
+      this.makeSearchRequest()
+    },
+    makeSearchRequest () {
       let params = Object.assign({}, this.searchRequest)
       params.key = config.key
       this.isLoading = true
