@@ -7,12 +7,17 @@
       @openImage="openModal"
       :list="resultsList" 
       :totalResults="totalResults"></results>
+    <image-modal @close="closeModal"
+      :isVisible="showModal"
+      :startIndex="modalStartIndex"
+      :list="resultsList"></image-modal>
   </div>
 </template>
 
 <script>
 import SearchBox from './modules/SearchBox/index.vue'
 import Results from './modules/Results.vue'
+import ImageModal from './modules/ImageModal.vue'
 import config from '../config.js'
 import axios from 'axios'
 
@@ -20,16 +25,22 @@ export default {
   name: 'app',
   components: {
     SearchBox,
-    Results
+    Results,
+    ImageModal
   },
   data () {
     return {
       isLandingMode: true,
       searchRequest: null,
-      showModal: false,
+      modalStartIndex: null,
       isLoading: false,
       totalResults: 0,
       resultsList: []
+    }
+  },
+  computed: {
+    showModal () {
+      return !!this.modalStartIndex
     }
   },
   methods: {
@@ -51,8 +62,11 @@ export default {
           this.isLoading = false
         })
     },
-    openModal () {
-      this.showModal = true
+    openModal (index) {
+      this.modalStartIndex = index
+    },
+    closeModal () {
+      this.modalStartIndex = null
     }
   }
 }

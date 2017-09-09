@@ -1,7 +1,7 @@
 <template>
   <div class="results-container" v-if="!isLoading && totalResults > 0">
     <thumbnail v-for="(image, index) in list" 
-      @openModal="$emit('openImage', index)"
+      @openImage="$emit('openImage', index)"
       :index="index"
       :key="image.id"
       :imageData="image"></thumbnail>

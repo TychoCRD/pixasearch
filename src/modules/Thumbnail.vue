@@ -37,7 +37,7 @@ export default {
     toggleDetails () {
       this.showDetails = !this.showDetails
     },
-    openModal () {
+    openImage () {
       this.$emit('openImage', this.index)
     }
   }
