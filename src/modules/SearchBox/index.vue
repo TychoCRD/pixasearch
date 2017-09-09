@@ -2,15 +2,14 @@
   <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'">
     <section class="title-search">
       <h2 class="title">Pixasearch</h2>
-      <div class="main-input">
+      <form class="main-input" @submit.prevent="startSearch">
         <input type="text" class="form-control" 
           v-model="searchTerm" 
           :placeholder="placeholder" autofocus/>
-        <button class="btn btn-primary"
-          @click.prevent="startSearch">Search
-          <span class="glyphicon glyphicon-search"></span>
+        <button class="btn btn-primary">Search
+          <i class="fa fa-search"></i>
           </button>
-      </div>
+      </form>
     </section>
     <section class="search-filters">
       <select-menu v-for="filter in filtersList"
@@ -120,7 +119,6 @@ export default {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    margin-top: 10%;
     padding: 20px;
     .title-search {
       display: flex;
@@ -167,8 +165,7 @@ export default {
     flex-direction: row;    
     flex-wrap: wrap;
     justify-content: center;
-    height: 65px;
-    margin-top: 0;
+    height: 130px;
     .title {
       margin-right: 30px;
       font-size: 34px;
