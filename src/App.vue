@@ -3,23 +3,31 @@
     <search-box 
       @startSearch="handleSearchRequest"
       :isLandingMode="isLandingMode"></search-box>
+    <results v-if="!isLandingMode" :isLoading="isLoading" 
+      @openImage="openModal"
+      :list="resultsList" 
+      :totalResults="totalResults"></results>
   </div>
 </template>
 
 <script>
 import SearchBox from './modules/SearchBox/index.vue'
+import Results from './modules/Results.vue'
 import config from '../config.js'
 import axios from 'axios'
 
 export default {
   name: 'app',
   components: {
-    SearchBox
+    SearchBox,
+    Results
   },
   data () {
     return {
       isLandingMode: true,
       searchRequest: null,
+      showModal: false,
+      isLoading: false,
       totalResults: 0,
       resultsList: []
     }
@@ -32,6 +40,7 @@ export default {
       this.searchRequest = request
       let params = Object.assign({}, this.searchRequest)
       params.key = config.key
+      this.isLoading = true
       axios.get('https://pixabay.com/api/', { params })
         .then(resp => {
           console.log(resp)
@@ -39,7 +48,11 @@ export default {
             this.totalResults = resp.data.totalHits
             this.resultsList = resp.data.hits
           }
+          this.isLoading = false
         })
+    },
+    openModal () {
+      this.showModal = true
     }
   }
 }
@@ -56,5 +69,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 </style>

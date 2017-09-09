@@ -115,10 +115,11 @@ export default {
 
 <style lang="scss" scoped>
   .searchbox {
+    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100%;
+    // height: 100%;
     padding: 20px;
     .title-search {
       display: flex;
@@ -162,10 +163,12 @@ export default {
     }
   }
   .searchbox-results {
+    flex-shrink: 0;
     flex-direction: row;    
     flex-wrap: wrap;
     justify-content: center;
     height: 130px;
+    border-bottom: 1px solid #ccc;
     .title {
       margin-right: 30px;
       font-size: 34px;
