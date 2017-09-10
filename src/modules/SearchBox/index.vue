@@ -129,7 +129,7 @@ export default {
         per_page: 200
       }
       let request = Object.assign({}, defaultParams, this.searchParams)
-      request.q = this.searchTerm
+      request.q = this.searchTerm.slice(0, 99)
       this.$emit('startSearch', request)
     },
     updateSearchParams (param, val) {
