@@ -1,5 +1,5 @@
 <template>
-  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'" :style="searchboxHeight" v-if="searchParams">
+  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'" v-if="searchParams">
     <section class="title-search">
       <div class="title-box">
         <span class="title">Pixasearch</span>
@@ -15,7 +15,7 @@
           </button>
       </form>
     </section>
-    <section class="search-filters">
+    <section class="search-filters" v-show="isLandingMode || showFilters">
       <select-menu v-for="filter in filtersList"
         :key="filter.param"
         @change="updateSearchParams"
@@ -104,17 +104,6 @@ export default {
         }
       ]
       return filterMap
-    },
-    searchboxHeight () {
-      if (this.isLandingMode) {
-        return {
-          'height': '100%'
-        }
-      } else {
-        return {
-          'height': this.showFilters ? '500px' : '80px'
-        }
-      }
     }
   },
   methods: {
@@ -149,6 +138,7 @@ export default {
   .searchbox {
     position: fixed;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -162,7 +152,6 @@ export default {
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      margin-bottom: 15px;
       .title {
         font-size: 34px;
         font-weight: bold;
@@ -179,6 +168,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       width: 65%;
+      margin-top: 15px;
       div {
         display: flex;
         align-items: center;
@@ -212,6 +202,8 @@ export default {
     overflow: hidden;
     padding: 10px;
     margin-top: 0;
+    min-height: 80px;
+    height: auto;
     .title-search {
       flex-direction: row;
       align-items: center;
