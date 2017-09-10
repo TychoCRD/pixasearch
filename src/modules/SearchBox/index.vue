@@ -150,13 +150,14 @@ export default {
     position: fixed;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     padding: 20px;
     overflow-y: auto;
     z-index: 2;
     background-color: #fff;
+    margin-top: 10%;
     .title-search {
       display: flex;
       flex-direction: column;
@@ -206,11 +207,11 @@ export default {
     }
   }
   .searchbox-results {
-    justify-content: flex-start;
     border-bottom: 1px solid #ccc;
     box-shadow: 0 0px 10px #ccc;
     overflow: hidden;
     padding: 10px;
+    margin-top: 0;
     .title-search {
       flex-direction: row;
       align-items: center;
@@ -225,6 +226,7 @@ export default {
         }
         .filter-toggle {
           font-size: 14px;
+          color: #007bff;
           cursor: pointer;
           i {
             font-size: 16px;
