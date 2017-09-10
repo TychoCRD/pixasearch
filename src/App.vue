@@ -67,7 +67,6 @@ export default {
       this.isLoading = true
       axios.get('https://pixabay.com/api/', { params })
         .then(resp => {
-          console.log(resp)
           if (resp.status === 200) {
             this.totalResults = resp.data.totalHits
             this.resultsList = resp.data.hits
