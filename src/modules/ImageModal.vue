@@ -1,6 +1,6 @@
 <template>
   <div class="modal-container" v-if="isVisible" >
-    <div class="modal-content" @blur="close">
+    <div class="modal-content">
       <span class="exit" @click="close"><i class="fa fa-close"></i></span>
       <div class="move-back" v-if="currentIndex > 0" @click="showPrevious">
         <i class="fa fa-angle-left"></i>
@@ -116,9 +116,6 @@ export default {
       }
       .move-back,
       .move-forward {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -129,12 +126,23 @@ export default {
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
+        i {
+          position: absolute;
+          top: 47%;
+          transform: translate(-50%, -50%);
+        }
       }
       .move-back {
         left: -65px;
+        i {
+          left: 45%;
+        }
       }
       .move-forward {
         right: -65px;
+        i {
+          left: 55%;
+        }
       }
       .main-image-container {
         width: 100%;

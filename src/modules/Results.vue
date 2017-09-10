@@ -1,5 +1,6 @@
 <template>
   <div class="results-container" v-if="!showPlaceholder">
+    <div class="hits-display">{{ `${totalResults} results, displaying ${list.length}.` }}</div>
     <thumbnail v-for="(image, index) in list" 
       @openImage="$emit('openImage', index)"
       :index="index"
@@ -40,7 +41,7 @@ export default {
       return this.isLoading || (!this.isLoading && this.totalResults === 0)
     },
     totalPages () {
-      return this.totalResults % 200
+      return Math.ceil(this.totalResults / 200)
     },
     showPageNav () {
       return this.totalPages > 0
@@ -65,6 +66,12 @@ export default {
     align-content: stretch;
     justify-content: flex-start;
     padding: 20px 30px;
+    .hits-display {
+      flex-shrink: 0;
+      width: 100%;
+      height: 20px;
+      margin-bottom: 15px;
+    }
     .page-nav {
       flex-shrink: 0;
       width: 100%;
