@@ -1,5 +1,5 @@
 <template>
-  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'" :style="searchboxHeight">
+  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'" :style="searchboxHeight" v-if="searchParams">
     <section class="title-search">
       <div class="title-box">
         <span class="title">Pixasearch</span>
@@ -19,6 +19,7 @@
       <select-menu v-for="filter in filtersList"
         :key="filter.param"
         @change="updateSearchParams"
+        :selectedVal="searchParams[filter.param]"
         :param="filter.param"
         :label="filter.label"
         :options="filter.options"></select-menu>
@@ -40,7 +41,8 @@
             <input class="form-check-input" type="checkbox" id="safe" v-model="searchParams.safesearch">
             Safesearch</label>
         </div>
-        <!-- <span class="reset" @click="resetFilters">Reset <i class="fa fa-refresh"></i></span> -->
+        <div class="reset" @click="resetFilters">
+          <span>Reset</span><i class="fa fa-refresh"></i></div>
     </section>
   </div>
 </template>
@@ -70,18 +72,12 @@ export default {
     return {
       searchTerm: '',
       placeholder: 'Whatcha looking for?',
-      searchParams: {
-        image_type: 'all',
-        orientation: 'all',
-        category: '',
-        min_width: 0,
-        min_height: 0,
-        editors_choice: false,
-        safesearch: false,
-        order: 'popular'
-      },
+      searchParams: null,
       showFilters: false
     }
+  },
+  mounted () {
+    this.searchParams = Object.assign({}, defaultSearch)
   },
   computed: {
     filtersList () {
@@ -141,6 +137,9 @@ export default {
     },
     toggleFilters () {
       this.showFilters = !this.showFilters
+    },
+    resetFilters () {
+      this.searchParams = Object.assign({}, defaultSearch)
     }
   }
 }
@@ -148,9 +147,7 @@ export default {
 
 <style lang="scss" scoped>
   .searchbox {
-    // flex: 1;
     position: fixed;
-    // height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -188,7 +185,7 @@ export default {
         margin-bottom: 15px;
       }
       input[type="number"] {
-        width: 70px;
+        width: 75px;
       }
       .form-group {
         span {
@@ -198,13 +195,17 @@ export default {
       .form-check {
         margin-left: 25px;
       }
+      .reset {
+        color: #007bff;
+        cursor: pointer;
+        font-weight: bold;
+        span {
+          margin-right: 5px;
+        }
+      }
     }
   }
   .searchbox-results {
-    // flex-direction: row;    
-    // flex-wrap: wrap;
-    // justify-content: center;
-    // height: 80px;
     justify-content: flex-start;
     border-bottom: 1px solid #ccc;
     box-shadow: 0 0px 10px #ccc;

@@ -1,8 +1,10 @@
 <template>
   <div class="select-container">
     <span>{{ label }}</span>
-    <select v-model="selected" class="custom-select">
-      <option v-for="option in options" v-bind:value="option.value">
+    <select @change="updateParam" class="custom-select">
+      <option v-for="option in options"
+        :selected="option.value === selectedVal"
+        :value="option.value">
         {{ option.text }}
       </option>
     </select>
@@ -13,18 +15,14 @@
 export default {
   name: 'SelectMenu',
   props: {
+    selectedVal: String,
     param: String,
     label: String,
     options: Array
   },
-  data () {
-    return {
-      selected: this.options[0].value
-    }
-  },
-  watch: {
-    selected (val) {
-      this.$emit('change', this.param, val)
+  methods: {
+    updateParam (e) {
+      this.$emit('change', this.param, e.target.value)
     }
   }
 }
