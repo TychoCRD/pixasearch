@@ -66,6 +66,7 @@ export default {
     align-content: stretch;
     justify-content: flex-start;
     padding: 20px 30px;
+    margin-top: 90px;
     .hits-display {
       flex-shrink: 0;
       width: 100%;

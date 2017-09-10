@@ -1,7 +1,11 @@
 <template>
-  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'">
+  <div class="searchbox" :class="isLandingMode ? '' : 'searchbox-results'" :style="searchboxHeight">
     <section class="title-search">
-      <h2 class="title">Pixasearch</h2>
+      <div class="title-box">
+        <span class="title">Pixasearch</span>
+        <span class="filter-toggle" v-if="!isLandingMode"
+        @click="toggleFilters">Filters <i class="fa" :class="showFilters ? 'fa-angle-up' : 'fa-angle-down'"></i></span>
+      </div>
       <form class="main-input" @submit.prevent="startSearch">
         <input type="text" class="form-control" 
           v-model="searchTerm" 
@@ -36,6 +40,7 @@
             <input class="form-check-input" type="checkbox" id="safe" v-model="searchParams.safesearch">
             Safesearch</label>
         </div>
+        <!-- <span class="reset" @click="resetFilters">Reset <i class="fa fa-refresh"></i></span> -->
     </section>
   </div>
 </template>
@@ -43,6 +48,16 @@
 import SelectMenu from '../../components/SelectMenu.vue'
 import filters from './filters.js'
 
+const defaultSearch = {
+  image_type: 'all',
+  orientation: 'all',
+  category: '',
+  min_width: 0,
+  min_height: 0,
+  editors_choice: false,
+  safesearch: false,
+  order: 'popular'
+}
 export default {
   name: 'SearchBox',
   props: {
@@ -64,7 +79,8 @@ export default {
         editors_choice: false,
         safesearch: false,
         order: 'popular'
-      }
+      },
+      showFilters: false
     }
   },
   computed: {
@@ -92,11 +108,25 @@ export default {
         }
       ]
       return filterMap
+    },
+    searchboxHeight () {
+      if (this.isLandingMode) {
+        return {
+          'height': '100%'
+        }
+      } else {
+        return {
+          'height': this.showFilters ? '500px' : '80px'
+        }
+      }
     }
   },
   methods: {
     startSearch () {
       if (!this.searchTerm) return
+      if (this.showFilters) {
+        this.showFilters = false
+      }
       const defaultParams = {
         q: '',
         page: 1,
@@ -108,6 +138,9 @@ export default {
     },
     updateSearchParams (param, val) {
       this.searchParams[param] = val
+    },
+    toggleFilters () {
+      this.showFilters = !this.showFilters
     }
   }
 }
@@ -115,28 +148,33 @@ export default {
 
 <style lang="scss" scoped>
   .searchbox {
-    flex: 1;
+    // flex: 1;
+    position: fixed;
+    // height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    // height: 100%;
     padding: 20px;
+    overflow-y: auto;
+    z-index: 2;
+    background-color: #fff;
     .title-search {
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
+      margin-bottom: 15px;
       .title {
+        font-size: 34px;
         font-weight: bold;
-        // font-size: 44px;
       }
       .main-input {
         display: flex;
+        align-items: center;
         input {
-          // font-size: 26px;
-          // width: 250px;  
-          // width: 300px;
           margin-right: 10px;
         }
-        margin-bottom: 15px;
       }
     }
     .search-filters {
@@ -163,18 +201,38 @@ export default {
     }
   }
   .searchbox-results {
-    flex-direction: row;    
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 130px;
+    // flex-direction: row;    
+    // flex-wrap: wrap;
+    // justify-content: center;
+    // height: 80px;
+    justify-content: flex-start;
     border-bottom: 1px solid #ccc;
-    .title {
-      margin-right: 30px;
-      font-size: 34px;
-    }
-    .search-controls {
+    box-shadow: 0 0px 10px #ccc;
+    overflow: hidden;
+    padding: 10px;
+    .title-search {
       flex-direction: row;
-      flex-wrap: wrap;
+      align-items: center;
+      height: 80px;
+      .title-box {
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .title {
+          font-size: 18px;
+        }
+        .filter-toggle {
+          font-size: 14px;
+          cursor: pointer;
+          i {
+            font-size: 16px;
+          }
+        }
+      }
+      .main-input {
+        margin-right: 10px;
+      }
     }
   }
 </style>
